@@ -1,6 +1,8 @@
 # covid19-terminalPlot
 Plots Corona (Covid-19) cases in your terminal.
 
+![example](https://i.imgur.com/SHkCUzJ.png)
+
 Data taken from [JHU CSSE](https://github.com/CSSEGISandData/COVID-19) via [https://github.com/ExpDev07/coronavirus-tracker-api](https://github.com/ExpDev07/coronavirus-tracker-api).
 
 # Requirements
@@ -16,7 +18,9 @@ Specify [confirmed, deaths, recovered] and a country code:
 ./covid19Plot deaths IT
 ./covid19Plot recovered DK
 ```
-Sample output
+(Optionally install cool-retro-terminal for the looks)
+
+# Sample output
 ```
 [marvin@thinkpad covidPlot]$ ./covid19Plot.py confirmed NO
 ====================================================================================================
