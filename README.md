@@ -12,9 +12,10 @@ pip install --user termplotlib
 ```
 
 # Usage
-Specify [confirmed, deaths, recovered] and a country code:
+Specify [confirmed, confirmed_new, deaths, recovered] and a country code:
 ```
 ./covid19Plot confirmed NO DE FR
+./covid19Plot confirmed SE
 ./covid19Plot deaths IT
 ./covid19Plot recovered DK
 ```

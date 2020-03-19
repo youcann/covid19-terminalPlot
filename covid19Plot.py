@@ -24,9 +24,18 @@ def plotBarhInTerminal(t,y):
 def plotByCountryCode(countryCode, type):
   timelines=getTimeLinesByCountryCode(countryCode)
   t,y=[],[]
-  for key in timelines[type]:
-    t.append(datetime.datetime.strptime(key, '%Y-%m-%dT%H:%M:%SZ').strftime('%Y-%m-%d'))
-    y.append(timelines[type][key])
+  if(type=='confirmed_new'):
+    for key in timelines['confirmed']:
+      t.append(datetime.datetime.strptime(key, '%Y-%m-%dT%H:%M:%SZ').strftime('%Y-%m-%d'))
+      y.append(timelines['confirmed'][key])
+
+    y_diff=[e1 - e2 for e1, e2 in zip(y+[0], [0]+y)][:-1]
+    y=y_diff
+  else:
+    for key in timelines[type]:
+      t.append(datetime.datetime.strptime(key, '%Y-%m-%dT%H:%M:%SZ').strftime('%Y-%m-%d'))
+      y.append(timelines[type][key])
+
   print("="*_MAX_WIDTH)
   str=f"{timelines['location'][0]['country']} ({type})"
   print((4)*"="+str+((_MAX_WIDTH-4)-len(str))*"=")
@@ -35,7 +44,7 @@ def plotByCountryCode(countryCode, type):
   print("="*_MAX_WIDTH+"\n")
 
 if __name__ == "__main__":
-  #plotByCountryCode("NO","confirmed")
+  #plotByCountryCode("NO","confirmed_new")
   parser = argparse.ArgumentParser()
   parser.add_argument("type")
   parser.add_argument("country",nargs='+')
