@@ -41,8 +41,6 @@ if __name__ == "__main__":
   parser.add_argument("country",nargs='+')
   args = parser.parse_args()
 
-  print(args.country)
-
   for country in args.country:
     plotByCountryCode(country,args.type)
   
