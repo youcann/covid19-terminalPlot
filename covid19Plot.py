@@ -5,7 +5,8 @@ import argparse
 import COVID19Py
 import termplotlib as tpl
 
-_MAX_WIDTH=100
+_MAX_WIDTH=150
+_ASCII=False
 
 def getTimeLinesByCountryCode(countryCode):
   covid19=COVID19Py.COVID19()
@@ -17,8 +18,7 @@ def getTimeLinesByCountryCode(countryCode):
 
 def plotBarhInTerminal(t,y):
   fig = tpl.figure()
-  fig.barh(y,t,force_ascii=True,max_width=_MAX_WIDTH-25)
-  #fig.barh(y,t)
+  fig.barh(y,t,force_ascii=_ASCII,max_width=_MAX_WIDTH-25)
   fig.show()
 
 def plotByCountryCode(countryCode, type):
@@ -51,7 +51,7 @@ if __name__ == "__main__":
   args = parser.parse_args()
 
   for country in args.country:
-    plotByCountryCode(country,args.type)
+    plotByCountryCode(country.upper(),args.type)
   
   
   
