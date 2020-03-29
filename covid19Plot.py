@@ -8,13 +8,28 @@ import termplotlib as tpl
 _MAX_WIDTH=150
 _ASCII=False
 
+def dict_sum(dict_list):
+    sum_dict = {}
+    for key in dict_list[0].keys():
+        sum_dict[key] = sum(d[key] for d in dict_list)
+    return sum_dict
+
 def getTimeLinesByCountryCode(countryCode):
-  covid19=COVID19Py.COVID19()
-  location=covid19.getLocationByCountryCode(countryCode,timelines=True)
-  confirmed_timeline=location[0]['timelines']['confirmed']['timeline']
-  death_timeline=location[0]['timelines']['deaths']['timeline']
-  recovered_timeline=location[0]['timelines']['recovered']['timeline']
-  return {'location':location, 'confirmed':confirmed_timeline, 'deaths':death_timeline, 'recovered':recovered_timeline}
+    covid19=COVID19Py.COVID19()
+    location=covid19.getLocationByCountryCode(countryCode,timelines=True)
+    provinces=[]
+    confirmed_timeline=[]
+    deaths_timeline=[]
+    recovered_timeline=[]
+    for province in location:
+        confirmed_timeline.append(province['timelines']['confirmed']['timeline'])
+        deaths_timeline.append(province['timelines']['deaths']['timeline'])
+        recovered_timeline.append(province['timelines']['recovered']['timeline'])
+        provinces.append(province['province'])
+    sumConfirmed=dict_sum(confirmed_timeline)
+    sumDeaths=dict_sum(deaths_timeline)
+    sumRecovered=dict_sum(recovered_timeline)
+    return {'countryName':location[0]['country'],'provinces':provinces, 'confirmed':sumConfirmed, 'deaths':sumDeaths, 'recovered':sumRecovered}
 
 def plotBarhInTerminal(t,y):
   fig = tpl.figure()
@@ -37,11 +52,12 @@ def plotByCountryCode(countryCode, type):
       y.append(timelines[type][key])
 
   print("="*_MAX_WIDTH)
-  str=f"{timelines['location'][0]['country']} ({type})"
+  str=f"{timelines['countryName']} ({type})"
   print((4)*"="+str+((_MAX_WIDTH-4)-len(str))*"=")
   print("="*_MAX_WIDTH)
   plotBarhInTerminal(t,y)
   print("="*_MAX_WIDTH+"\n")
+
 
 if __name__ == "__main__":
   #plotByCountryCode("NO","confirmed_new")
